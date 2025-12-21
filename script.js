@@ -87,63 +87,41 @@ function openProjectModal(projectId) {
 }
 
 // ==========================================
-// CONTACT FORM HANDLING
+// CONTACT FORM HANDLING (for Formspree)
 // ==========================================
 
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-    
-    // Validate form
+if (contactForm) {
+  contactForm.addEventListener('submit', function (e) {
+    // simple front-end validation only
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const message = document.getElementById('message').value.trim();
+
     if (!name || !email || !subject || !message) {
-        formStatus.textContent = 'Please fill in all fields.';
-        formStatus.className = 'form-note error';
-        return;
+      e.preventDefault();
+      formStatus.textContent = 'Please fill in all fields.';
+      formStatus.className = 'form-note error';
+      return;
     }
-    
-    // Validate email
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        formStatus.textContent = 'Please enter a valid email address.';
-        formStatus.className = 'form-note error';
-        return;
+      e.preventDefault();
+      formStatus.textContent = 'Please enter a valid email address.';
+      formStatus.className = 'form-note error';
+      return;
     }
-    
-    // Since we can't send emails directly from static site,
-    // we'll show a success message and suggest alternatives
-    formStatus.textContent = '✓ Message prepared! Please copy the below and email to: your.email@example.com';
-    formStatus.className = 'form-note success';
-    
-    // Create email body
-    const emailBody = `
-Name: ${name}
-Email: ${email}
-Subject: ${subject}
 
-Message:
-${message}
-    `.trim();
-    
-    // Log to console (for development)
-    console.log('Form Data:', { name, email, subject, message });
-    
-    // Reset form
-    contactForm.reset();
-    
-    // Clear message after 3 seconds
-    setTimeout(() => {
-        formStatus.textContent = '';
-        formStatus.className = '';
-    }, 5000);
-});
+    // Let the browser submit to Formspree.
+    formStatus.textContent = 'Message sent!';
+    formStatus.className = 'form-note success';
+  });
+}
+
 
 // ==========================================
 // PAGE LOAD EFFECTS
