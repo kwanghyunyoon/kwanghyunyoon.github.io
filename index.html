@@ -270,18 +270,20 @@
             <form
   class="contact-form"
   id="contactForm"
-  action="https://formspree.io/f/xkowzwen"  
+  action="https://formspree.io/f/xkowzwen"
   method="POST"
 >
+
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required>
     </div>
 
     <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="_replyto" required>
-    </div>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="_replyto" required>
+</div>
+
 
     <div class="form-group">
         <label for="subject">Reason</label>
@@ -293,8 +295,8 @@
         <textarea id="message" name="message" rows="5" required></textarea>
     </div>
 
-    <!-- Optional: hidden subject for emails you receive -->
-    <input type="hidden" name="_subject" value="New message from portfolio contact form">
+   <input type="hidden" name="_subject" value="New message from portfolio contact form">
+
 
     <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
     <p class="form-note" id="formStatus"></p>
