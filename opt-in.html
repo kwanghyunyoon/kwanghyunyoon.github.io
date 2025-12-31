@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Opt-In - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #F7F9FF;
+            color: #1E254E;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .header {
+            background: #1E254E;
+            color: #F7F9FF;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            background: #FFFFFF;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(30, 37, 78, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: #1E254E;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 0.75rem 0.9rem;
+            border: 1.6px solid #D3D7F0;
+            border-radius: 10px;
+            font-size: 0.96rem;
+            font-family: inherit;
+            transition: border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #A59FE6;
+            box-shadow: 0 0 0 3px rgba(165, 159, 230, 0.35);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 0.2rem;
+            cursor: pointer;
+            accent-color: #A59FE6;
+        }
+
+        .checkbox-label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: #A59FE6;
+            text-decoration: none;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            background: #A59FE6;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.22s ease;
+        }
+
+        button:hover {
+            background: #9387D8;
+        }
+
+        button:active {
+            background: #8A7ECB;
+        }
+
+        .success-message {
+            display: none;
+            background: #E8F5E9;
+            color: #1B5E20;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 1.5rem;
+        }
+
+        .footer-text a {
+            color: #A59FE6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SMS Opt-In</h1>
+            <p>Join my SMS notification list for updates and testing opportunities</p>
+        </div>
+
+        <div class="form-section">
+            <form id="optInForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number (10 digits) *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label class="checkbox-label" for="consent">
+                        I consent to receive SMS text messages from Kwang's Portfolio at the phone number above. Message and data rates may apply. I can reply STOP to opt out anytime. I have read and agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <button type="submit">Confirm Opt-In</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                ✓ Thank you! You've successfully opted in to SMS notifications. You can expect your first message shortly.
+            </div>
+        </div>
+
+        <div class="footer-text">
+            <p>Your data is secure and will never be shared with third parties. <a href="privacy.html">Learn more</a></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('optInForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const consent = document.getElementById('consent').checked;
+
+            if (!fullName || !email || !phone || !consent) {
+                alert('Please fill in all fields and check the consent box.');
+                return;
+            }
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Show success message
+            form.style.display = 'none';
+            successMessage.classList.add('show');
+
+            // Log for verification
+            console.log('Opt-in data:', { fullName, email, phone, consent });
+        });
+    </script>
+</body>
+</html>
